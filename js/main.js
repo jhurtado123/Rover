@@ -1,105 +1,161 @@
-let rover = {
-  position: {
-    x: 0,
-    y: 0
-  },
-  direction: 'E',
-  travelLog: [],
-}
 
-function moveForward(rover) {
-  // hace referencia a la variable de la linea 9
-  switch (rover.direction) {
-    case 'N':
-      rover.position.y = rover.position.y - 1;
-      // rover.position.y--;
-      break;
-    case 'E':
-      rover.position.x++;
-      break;
-    case 'S':
-      rover.position.y++;
-      break;
-    case 'W':
-      rover.position.x--;
-      break;
-    default:
-      console.log('dirección desconocida');
-      break;
+const unaVar = true
+
+class Rover {
+  constructor(direction) {
+    this.direction = direction;
+    this.position = {
+      x: 0,
+      y: 0,
+    };
+    this.travelLog = [];
   }
-}
 
-function turnLeft(rover) {
-  switch (rover.direction) {
-    case 'N':
-      rover.direction = 'W'
-      break;
-    case 'E':
-      rover.direction = 'N'
-      break;
-    case 'S':
-      rover.direction = 'E'
-      break;
-    case 'W':
-      rover.direction = 'S'
-      break;
-    default:
-      console.log('dirección desconocida');
-      break;
-  }
-}
-
-function turnRight(rover) {
-  switch (rover.direction) {
-    case 'N':
-      rover.direction = 'E'
-      break;
-    case 'E':
-      rover.direction = 'S'
-      break;
-    case 'S':
-      rover.direction = 'W'
-      break;
-    case 'W':
-      rover.direction = 'N'
-      break;
-    default:
-      console.log('dirección desconocida');
-      break;
-  }
-}
-
-function registerLog(rover, position) {
-  rover.travelLog.push(position);
-}
-
-// function canIMoveForward(rover) {
-
-// }
-
-function command(listOfCommands, rover) {
-  for (let index = 0; index < listOfCommands.length; index++) {
-    switch (listOfCommands[index]) {
-      case 'f':
-        // if (canIMoveForward(rover)) {
-        moveForward(rover);
-        registerLog(rover, { x: rover.position.x, y: rover.position.y });
-        // }
+  turnLeft() {
+    switch (this.direction) {
+      case 'N':
+        this.direction = 'W';
         break;
-      case 'l':
-        turnLeft(rover);
+      case 'E':
+        this.direction = 'N';
         break;
-      case 'r':
-        turnRight(rover);
+      case 'S':
+        this.direction = 'E';
+        break;
+      case 'W':
+        this.direction = 'S';
         break;
       default:
-        console.log('command not found');
         break;
     }
+  }
 
+  turnRight() {
+    switch (this.direction) {
+      case 'N':
+        this.direction = 'E';
+        break;
+      case 'E':
+        this.direction = 'S';
+        break;
+      case 'S':
+        this.direction = 'W';
+        break;
+      case 'W':
+        this.direction = 'N';
+        break;
+      default:
+        break;
+    }
+  }
+
+  moveForward() {
+    switch (this.direction) {
+      case 'N':
+        this.position.y = this.position.y - 1;
+        break;
+      case 'E':
+        this.position.x++;
+        break;
+      case 'S':
+        this.position.y++;
+        break;
+      case 'W':
+        this.position.x--;
+        break;
+      default:
+        break;
+    }
+  }
+
+  _canMoveNextPosition() {
+    let actualPosition = this.position;
+    switch (this.direction) {
+      case 'N':
+        return !(actualPosition.y - 1 <= -1);
+        break;
+      case 'E':
+        return !(actualPosition.x + 1 >= 10);
+        break;
+      case 'S':
+        return !(actualPosition.y + 1 >= 10);
+        break;
+      case 'W':
+        return !(actualPosition.x - 1 <= -1);
+        break;
+      default:
+        console.log('Incorrect Move!')
+        break;
+    }
+  }
+
+  isThereAnObstacle(obstacles) {
+    let actualPosition = this.position;
+    switch (this.direction) {
+      case 'N':
+        return this.checkPositionInObstacle({ x: this.position.x, y: this.position.y - 1 }, obstacles);
+        break;
+      case 'E':
+        return this.checkPositionInObstacle({ x: this.position.x + 1, y: this.position.y }, obstacles);;
+        break;
+      case 'S':
+        return this.checkPositionInObstacle({ x: this.position.x, y: this.position.y + 1 }, obstacles);;
+        break;
+      case 'W':
+        return this.checkPositionInObstacle({ x: this.position.x - 1, y: this.position.y }, obstacles);;
+        break;
+      default:
+        console.log('Incorrect direcction!')
+        break;
+    }
+  }
+
+  registerLog(position) {
+    this.travelLog.push(position)
+  }
+
+  showRoverPosition() {
+    console.log(`Rover in position x: ${this.position.x} position y: ${this.position.y} direction: ${rover.direction}`)
+  }
+
+  checkPositionInObstacle(position, obstacles) {
+    let found = false
+    for (let index = 0; index < obstacles.length; index++) {
+      if (!found) {
+        found = obstacles[index].x === position.x && obstacles[index].y === position.y;
+      }
+    }
+    return found;
   }
 }
 
-command('ffflfff', rover);
+const rover = new Rover('E');
+const rover2 = new Rover('E');
 
-console.log(`el rover esta en position x: ${rover.position.x} y: ${rover.position.y} travelLog:`, rover.travelLog);
+function commands(listOfCommands, rover, obstacles) {
+  for (let i = 0; i < listOfCommands.length; i++) {
+    switch (listOfCommands[i]) {
+      case 'f':
+        if (rover.canMoveNextPosition(rover) && !rover.isThereAnObstacle(obstacles)) {
+          rover.moveForward(rover);
+          // showRoverPosition(rover);
+        }
+        rover.registerLog(rover, rover.position);
+        break;
+      case 'l':
+        rover.turnLeft(rover);
+        // showRoverPosition(rover);
+        break;
+      case 'r':
+        rover.turnRight(rover);
+        // showRoverPosition(rover);
+        break;
+      default:
+        break;
+    }
+    rover.showRoverPosition(rover);
+  }
+}
+
+commands('fffrf', rover2, [{ x: 3, y: 3 }]);
+commands('fffff', rover, [{ x: 3, y: 3 }]);
