@@ -3,15 +3,22 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Rover</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-    <h1>Rover</h1>
-    <script src="/js/main.js"></script>
-    <!-- <script src="/js/scope.js"></script> -->
+<div id="wrapper"></div>
+
+<script src="js/Board.js"></script>
+<script src="js/Rover.js"></script>
+<script src="js/view.js"></script>
+<script src="js/Controller.js"></script>
+<script>
+    const controller = new Controller(10, 10, 8, [new Rover(1, 1, 'W', 'curiosity'), new Rover(5, 1, 'N', 'curiosity2')]);
+</script>
 </body>
 
 </html>

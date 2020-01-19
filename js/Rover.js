@@ -1,12 +1,10 @@
-
-const unaVar = true
-
 class Rover {
-  constructor(direction) {
+  constructor(posX, posY, direction, ID) {
+    this.id = ID;
     this.direction = direction;
     this.position = {
-      x: 0,
-      y: 0,
+      x: posX,
+      y: posY,
     };
     this.travelLog = [];
   }
@@ -129,6 +127,7 @@ class Rover {
   }
 }
 
+/**
 const rover = new Rover('E');
 const rover2 = new Rover('E');
 
@@ -159,3 +158,4 @@ function commands(listOfCommands, rover, obstacles) {
 
 commands('fffrf', rover2, [{ x: 3, y: 3 }]);
 commands('fffff', rover, [{ x: 3, y: 3 }]);
+ **/
