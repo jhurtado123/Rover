@@ -12,12 +12,24 @@
 <body>
 <div id="wrapper"></div>
 
+<div class="instructions">
+    First select a Rover clicking on it.
+    <p>To move right: PRESS 'a'</p>
+    <p>To move left: PRESS 'd'</p>
+    <p>To move forward: PRESS 'w'</p>
+    If you want to move another rover just click on it.
+    <br>
+    <div class="selected-rover">
+        Selected Rover: <span></span>
+    </div>
+</div>
+
 <script src="js/Board.js"></script>
 <script src="js/Rover.js"></script>
 <script src="js/view.js"></script>
 <script src="js/Controller.js"></script>
 <script>
-    const controller = new Controller(10, 10, 8, [new Rover(1, 1, 'W', 'curiosity'), new Rover(5, 1, 'N', 'curiosity2')]);
+    const controller = new Controller(10, 10, 18, [new Rover(1, 1, 'W', 'curiosity'), new Rover(5, 1, 'N', 'spirit'), new Rover(7, 8, 'N', 'sojourner')]);
 </script>
 </body>
 

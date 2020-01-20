@@ -35,3 +35,22 @@
 #wrapper .portion.rover.W {
     transform: scaleX(-1);
 }
+#wrapper .portion.selected {
+    background:  url('../img/rover.png') no-repeat center,  #fda999;
+    background-size: contain;
+}
+
+.selected-rover{
+    margin-top:20px;
+    font-size: 30px;
+
+}
+.selected-rover span {
+    font-weight: bold;
+    display: block;
+}
+.instructions {
+    position: absolute;
+    top:40px;
+    left:10px;
+}

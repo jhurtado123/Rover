@@ -29,6 +29,11 @@ class View {
     addMoveListener(callback) {
         document.addEventListener('keydown', callback);
     }
+    addSelectListener(callback) {
+        document.querySelectorAll('.portion').forEach( portion => {
+            portion.addEventListener('click', callback);
+        })
+    }
 
     _isObstaclePortion(obstacles, portionCoors) {
         let response = false;
